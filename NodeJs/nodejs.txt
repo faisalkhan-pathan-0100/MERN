@@ -1,0 +1,599 @@
+Node JS
+    - it is run time environment.
+    - one software(runtime environment) to run the js program.
+    - we can create the server with this
+    - node js enable the developer to run the js program directly without the browser(browser console) which is used till now.
+    - also support the asnychronous and synchronous programming.
+    - Node.js is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.
+    - we cannot use the document object  of browser.
+
+--------------module--------------------------
+
+- js file which contain multiple predefined function and property and classes.(like java package, header file of c &c++).
+- in other word module means  collection of function 
+- how to use?
+    - import the module.
+    - then use its function and property.
+
+- type of module    
+    1. in-built module.      => from Node.js (predefined).
+        ex, for writing and reading the data from/to file is -> "fs" (file system).
+        ex, "http" module -> send , accept, process request we can use this module.
+
+    2. user-define module.   => create by the user (demo-module)
+    3. 3rd party module.     => nither by node js nor by developer (to use this we have to download this).
+
+
+--------------------------------------- package download --------------------------------------------
+
+- npm (node package manager) : it is Command line interface
+- npm  comses with node.js installation.
+        - express js and react js are 3rd party module.
+
+========> fs- module
+
+ex, demo-module
+    funcitons:
+        fun1(),
+        fun2()
+
+- require("demo-module or  path"); => give object reference to that module(demo-module) then we collect it in variable
+- require is like a import
+var faisal = require("demo-module");
+    faisal.fun1();
+    faisal.fun2();
+
+var fs = require("fs");  // fs is inbuilt module
+fs.writeFile(filename/path, data, callback); //fs.write is asynchronous funciton(non blocking nature)
+fs.writeFileSync("filepath",data);     // for synchronous way of write
+
+read from file
+fs.readFile("filename/path",callback) =>asnychronous
+fs.readFileSync("onlypath") => synchronous
+
+note: debounce effect read
+
+
+--------------------------------user defined module creation---------------------------------------
+step -1 create the js file of module in which we defined fucntion and properties
+step -2 use this js file anywhere with require() method like,
+ex,
+    const mymodule = require("./mymodule.js");    
+    - we have to give complite path of user defined module(relative path of the module). 
+    - inbuilt and 3rd party no required
+
+    ./ -> find file in same folder & .// for  finding file in other folder(out from current folder)
+
+    -  module name and reference which refer to that module should be same (here mymodule)-> recommanded
+
+function sum(a,b){  // give error
+    return a+b;
+}
+
+general syntax for export exports.property  = function (){ }
+    ex, 
+        exports.sum = (a,b) =>{ return a+b}
+
+----------------------------------------server creation -----------------------------------
+- http inbuilt module will provide certain function using  which we can create the server.
+- local server ip address: 127.0.0.1 is fixed
+- for real sever we are having domain name for each IP similar way for local server, localhost is domain name 
+    ex, 127.0.0.1 or localhost--->(domain name)
+
+- we have multiple application running on the local server then which app  request to server is hard to find - so we have the port number for each app.
+
+    social media  -  3000
+    e-commerce    - 4000
+    student management system  -5000
+- all this are run on the same local server with diff port numbers 
+- railway station - server and platform is port number
+
+- port number - uniqui number for each application
+- ip : port 
+    ex, 127.0.0.1:3000  means take to social media application
+
+step -1 import inbult module http
+    const http = require('http');
+
+step-2 use function[createServer] of the http module to create the server
+    var server = http.createServer(); // create server and  return the server reference(object)
+
+step-3 start the server with listen() method of server which we create
+    server.listen(3000);  // to start the server (start listing on the requests).
+
+along with the main file of server creation code or the complete source code file we must have one configure file that having certain kind of  
+    -info about author of project, 
+    -project detail, 
+    -started of project, 
+    -licence, current version of project,
+    -used 3rd party module in project,
+    -url of git repo of the project 
+    -main file (starting file) -> recommanded => index.js
+and the name of the file is "package.json" (for meta data)
+
+
+-----way to create package.json-----
+
+
+1. maually by createing package.json file and write all properties in key value pair
+2. with the help of npm : npm init ->generate the package.json file
+
+// way to include module in js file
+1. require()
+2. imports
+
+two stardard are there to work with js
+1. common js  function, require, prototype
+2. ES -> ecma script  ->  ()=>{}
+
+------------------------------------------------------
+fs -> writeFile , writeFileSync
+
+import {properties(which we want to import)} from 'module-name';
+export fucntion sum(a,b){return a+b} allowed with ES stardard
+
+ex of EC5,     
+    import {writeFile,writeFileSync} from 'fs';
+    writeFile();
+    writeFileSync(); directly called with out the fs module reference
+
+for whole module import 
+    import * as fs1 from 'fs';
+
+import{createServer} from 'http';
+createServer( ()=>{}); // directly used
+
+---------------------3rd party module-------------------
+
+- to install the 3rd party module use npm,
+    ex, npm install package-name;
+
+- express is 3rd party module so to install it ,
+    npm install express (in terminal of project folder so entry info(record) about this goes to the package.json file)
+- it will create one node_modules folder and package-lock.json file also created
+- now our project is depenedent on express module so it will call as the dependency(express).
+- all the downlodded dependancies folder and files will go inside of node_modules.
+
+
+- why package.json file maintain the name of dependancies?
+   1. more then one devloper are work on the same project and each one can install diff diff 3rd party moduel for their own requirement so that all development team should be aware of this, that is why it is maintain in the package.json
+
+   2. size of node module goes larger(bulky size) and at a time of sharing the whole project  it is not recommanded to share the dependancies folder as it take to much time so now we give whole project except the node_modules -> now new team see the pakage.json file and see which depenedency are there and install all that depenedency one by one. or instade we can download all dependancies in one command by "npm install"
+
+- types of 3rd party module(based on location at which it install)
+    1. local module 
+        -project p1 install module1 then project p2 and p3 can not use module1 without install it.
+        - deciding fector- if module provide predefine fun and property which we useing in our project - then locally installed
+        - local module = depenedency
+
+    2. global module
+        - install in one project and use it in any project
+        - stored in folder where node is install.
+        - some module might not give any fun or property but give some tools
+        - gloable moduelentry shouldnot be there in package.json file.
+        ex, npm install -g module-name
+
+- restaring server manually after change in the server code every time is required otherwise respose will give accouding to the old code so that to get rid of every time restarting the server we can use nodemoan module which autometically restart the server whenever we made a change in source code of the server.
+
+facebook.com         -> base url
+facebook.com/login   -> sub url
+facebook.com/signup  -> sub url
+
+import {createServer} from 'http';
+const server = createServer((request,response) =>{    // for all url base or sub this is the  only function is handle that requests. 
+    read the URL
+    apply condition on url
+    
+    if(url = "127.0.0.1"){ 
+        //code
+    }else if(url = "127.0.0.1:5000"){
+        //code
+    }
+    response.write("faisalhan pathan");
+    response.end();
+});
+
+server.listen(5000,()=>{
+    console.log("started the server");
+})
+
+routing: routing refers to how your server responds to client requests to specific endpoints (paths) and HTTP methods (GET, POST, etc.)
+
+express js is library using which ...
+
+
+way -1 => import express from 'express';
+way -2 => const express = require('express') like that
+
+- no seperate fucntion(like createServer) to create the server but we have to create an express application by express();
+
+const app = express();    // this is our server creation part this return the object  of newly created express-app which refer to this server
+------------------------------
+internally 
+
+function express() {
+  const app = function(req, res, next) {
+    // request handler logic
+  };
+
+  // attaches methods like app.get, app.use, etc.
+  return app;
+}
+--------------------------
+// starting of server
+app.listen(3500, ()=>{
+    console.log("server is running");
+});
+
+-------------------------------------------------
+-to handle the routing we need object of express app
+- first mention the request like GET,  POST, PUT, DELETE
+
+- if 127.0.0.1:5000  base url and GET ->task : welcome
+- if 127.0.0.1:5000/login  base url and GET ->task :  welcome to login
+
+-if GET request then get() fucntion of express will called
+-if POST request then post() fucntion of express will called
+-if DELETE request then delete() fucntion of express will called
+-if PUT request then put() fucntion of express will called
+
+
+// case - 1 base url and GET request
+app.get("/",(request,response)=>{
+    response.send("welcome to our page");
+});
+
+// case - 2 login url(sub) and GET request
+app.get("/login",(request,response)=>{
+    response.send("welcome to logIn");
+});
+
+//case -3 sum url and GET request
+app.get("/sum",(request,response)=>{
+    var x = 10;
+    var y = 10;
+    var z = x+y;
+    response.send("Sum is: "+z);
+});
+---------------------create new project for backend--------------------------------
+setp -1 create new folder for new project
+step -2 create entry point js file(index.js) in which we writing the server code
+setp -3 in terinal(same folder) run command npm init
+setp -4 provide detail of project(meta data of the project) and at the end new package.json file will create from this data.
+step -5 install express by run the command in terminal -> npm install express 
+setp -6 start write server code in entry point js file 
+    step -6.1 import the express module in index.js
+    step -6.2 create server and returning object of server will store in the variable like var app = express();
+    step -6.3 start server by app.listen() method
+    step -6.4 start to handle diff diff url request
+
+
+----Day-10 (03-05-2025)-----------------------------------------------
+
+way -1
+- for sensitive data url parameter is node recommanded or for complex data like array or object we never sand it through url to server.
+- url parameter limit -> 2000 character only
+- only GET request is allowed through url parameter.
+
+way -2
+- request body ( data body  atteched  with  request) -> safer way 
+
+- get() method not support data body 
+- post() & put() & petch() method support the data body.
+
+- for server tasting we use thunder client extention in VS code
+
+- -----------------------Middlewere-------------------------------------
+
+- whenever request comes call back will execute without any authentication(check user logged in or not) but some validation are required so Middlewere will do this task of authentication.
+
+- middleware is fucntion that will be going to called when request arried and just before the exucution of the request callback function.
+- request -> call Middlewere function - if allowed then callback of request will execute.
+- request -> call Middlewere function - if  not allowed then callback of request will  not execute.
+
+- how to create the middleware?
+
+fucntion mymiddleware (request, response, next){
+
+}
+
+- on one request we can mention multiple middleware.
+
+-method -1 
+    import express from 'express';
+    const app = express();
+
+    //middleware
+    const mymiddleware = (request,response,next)=>{
+        console.log("inside middleware");
+        next();
+    }
+
+    get("url", middleware, callback);
+
+    //base url and get
+    app.get("/",mymiddleware,(request,response)=>{    // base url
+        response.send("welcom to our app");
+    })
+
+
+    app.post("/sum",mymiddleware,(request,response)=>{
+        // request.params //it will give url parameter
+        const data = request.body      // it will give data pass in request data-body
+        console.log(data);
+        response.send("sum");
+    });
+
+
+    app.listen(9600,()=>{
+        console.log("server started.....");
+    });
+
+    just to check,
+        3 middleware m1 ,m2, m3
+        app.get("/",m1,m2,m3,(request,response)=>{    // base url
+        response.send("welcom to our app");
+    })
+
+-----------------------
+method -2 
+app.use(middleware) - it will register a middleware that has to be called  on each request
+
+    import express from 'express';
+    const app = express();
+
+    //middleware
+    const mymiddleware = (request,response,next)=>{
+        console.log("inside middleware");
+        next();
+    }
+
+    //register middleware
+    app.use(mymiddleware);
+
+    //base url and get
+    app.get("/",(request,response)=>{    // base url
+        response.send("welcom to our app");
+    })
+
+
+    app.post("/sum",(request,response)=>{
+        // request.params //it will give url parameter
+        const data = request.body      // it will give data pass in request data-body
+        console.log(data);
+        response.send("sum");
+    });
+
+
+    app.listen(9600,()=>{
+        console.log("server started.....");
+    });
+
+
+- to preocess the json request body, express is giving a middleware that should be called evry time  automatically
+- exprees.json() -> express middle so express can see the data of databody which is passed with the request.
+
+    app.post("/sum",express.json(),(request,response)=>{
+        // request.params //it will give url parameter
+        const data = request.body      // it will give data pass in request data-body(thunder client body)
+        console.log(data);
+        response.send("sum");
+    });
+
+- whole server in either in  json formate or in xmlformat
+------------------------------------------------------------------------
+
+127.0.0.1:9400 GET {message: "welcome to home"} 200
+127.0.0.1:9400/factorial/5 GET {factorial: 200} 400
+
+npm init -y   => for default
+npm i express  = npm install express
+npm  i http-status-codes
+
+
+------------------database connectivity--------------------------------
+
+step -1 install express and mysql2 dependancies in project folder
+step -2 import both the dependancies in entry point script file(index.js).
+step -3 import createConnection function from mysql2 dependency
+setp -4 create server with express() function
+step -5 starting the server with listen() function of the express
+step -6 create the connection of server with database with createConnection() and pass the details of the database in this function like,
+        host, user(database), login password of tha database, database name in which we want to store the data.
+        ex, 
+            const conn = createConnection({ database details });
+        
+        - this createConnection function return the object of connection.
+step -7 use connect() function with connection object which we got in step -6 to check that wheather database connect successfully or not
+        this connect() function take one callback fucntion with argument as error to know the error if there is error to connect with database.
+        ex, conn.connect((error)=>{});
+
+step -8 provide middleware for authetication  and this will execute just before the callback function of the request get execute
+        ex, app.use(express.json());
+
+step -9 handle the routing by diff diff method like get(),put(),post(),delete().
+step -10 in handling part of routing we have to write the query like,
+        step -10.1 first write the query and store it in any variable then use query() fucntion ans pass that varible in this function with on callback funciton
+        which is use to check for error and providing the result as this callback take two parameter one is error and one is result.  
+        ex,
+            qry = "select * from student";
+            app.query(qry,(error,result)=>{
+                if(error){
+                    // give response according the error
+                }else{
+                    // give response with the result 
+                }
+            });
+
+---------------------Day -11(04-05-2025)------------------------
+
+- API - Application Programming Interface
+- using API we can use functtionality and servies of one application into another application.
+- API's can be acessed cross technology.
+    API written in one language that API  can be access and use that API in application which is created through another technology.
+    API written in which langugae is doent metter while using it to another platform
+- frontend can be diff for diff device but the backend is same.
+- and to create the same backend we can use this API.
+- through API we can seperating the frontEnd and backend 
+- if we chnaging the database technology it will not affect the frontend technology and vice versa.
+
+
+API security through authentication using login:
+    step -1 first check that username and password are match or not if match then, it is successful login.
+    step -2 for successfully login then server give tokan to the client (store in browser memory) as a response.
+    step -3 now for every request from client first check is there token available or not if available then check it is valid token  or not then after that request will be full fill. this can be achive with the middleware as in middleware we can check that token available or not then token is valid or not if both the codition is tru then and then call back of that request will execute.
+
+
+
+-----bcrypt module------------------------------------------------------
+- to encode the password.
+- install "bcrypt" dependency
+- take plain password and give encrypt password(salt value require)
+- it has methods like hash()->asynchronous and hashsync() ->synchronous
+    const encryptPassword = hashsync(plainpassword,noOfRound)
+- it has also compare("pain password", "encrpted password") this method return boolean either true or false
+
+- how to encrypt the password?
+    step -1 install the bcrypt dependency  --> npm install bcrypt
+    step -2 encrypt the password with either with hash(plainpassword,noOfRound) or hashsync(plainpassword,noOfRound)
+
+
+--------------------mysql2 module---------------------------
+
+
+--------------------------------------------------------------
+
+------ generate the token
+- we use JWT(JSON web Token) token
+- while creating the token we can mention the payload as JSON(data that token should carry)
+- we can create the JSON object in token
+-payload : jSON data that token carry is known as the payload.
+
+ 
+
+- we will use jsonwebtoken 3rd party dependency
+    - jsonwebtoken has sign(payload,secret-key) function will createtoken and inside this function we provide the payload and secret-key
+    - jwt has one verify() function which is used to verify the token for perticular user
+        - jwt.verify(tokenvalue,"secret-key",(error,payload)=>{});  //this callback will give the decoded payload
+
+- token is alphanumeric value
+- token  ex, part1.part2.part3
+    - part1 -> algorithm
+    - part2 -> payload
+    - part3 -> secret-key
+
+- token can not pass to url as is it sensitive data also can not pass to request body as get request doesn't pass the requestbody so the only solution is token pass into the request header which is known as the Authorization.
+
+extra-> response contains what?
+        why we can not pass middleware  which is used for token varify token in app.use()
+        ans - if we pass middleware inside the  use() this will apply to all even with login and as at a time of the login there is no any token available.
+
+token creation  and varify steps
+    step -1 install jsonwebtoken by npm install jsonwebtoken
+    step -2 use sign method to create token 
+            ex, sign(payload,"secret-key"); 
+                sign({any json object},"any secret-key");
+    step -3 varify token 
+            ex, jwt.verify(token,"secret-key",(error,payload)=> {});
+----------------------------------------------------------------------------------------------------
+secured API:
+in secured apis, token will be passed into the request header & name of that header is Authorization
+
+step -0 create middleware(varifyToken)
+step -1 read token value from request authorization header
+step -2 check for token existance
+step -3 if token is there in authorization header then varify the token valid or not.
+setp -5 if token is not there in authorization header then response with the error method.
+setp -5.1 if token valid -> next();
+setp -5.1 if token not valid -> response with error message.
+
+function verifyToken(request,response,next){        step-0
+    // request.body(from request body) or request.params(url) and const authheader = request.get('Authorization'); //step-1
+    if(authheader){         //step-2
+        const token  = authheader.spilt(" ")[1];   // token-> bearer "tokenvalue"  => here we extracct the token from the authorization header
+        jwt.varify(token,"secret-key",(error,payload)=>{       // step -3
+            if(error){
+                    response.status(statusCodes.UNauthorized).send("invalid token");    //step -5.1
+            }else{
+                next();     //step -5.1
+            }
+        });   
+        
+    }else{      step-4
+        response.status(statusCodes.UNauthorized).send("token missing");
+    }
+}
+
+
+---------------------bifergate codes
+- seperate middlewares code
+    - token authentication middlewares in one file
+    - file releted middlewares in one file
+- database connection code in one file(Dbconfing.js) 
+    - we can direclty export connection obj
+    - make getConnectionOBject() which return the database connection obj
+- all releted controllers/callback of request(student entity or admin entity) in one file
+    - admincontroller.js
+    - studentcontroller.js
+        registercontroller
+        getallstudentconstroller    (get request)
+        getstudentbyidcontroller    (get request)
+        deletestudentbyidcontroller (delete request)
+        updatestudentbyidcontroller ((update or put) request)
+- all routing in releted file  (exporting server object(app))
+        adminRouts.js (import server object(app))
+        studentRout.js  (import server object(app))
+
+        - problem - cyclic 
+        -express give router dedicated object
+            ex, express.Router(); 
+
+        adminRouts.js 
+            const AdminRouter = exprees.Router();
+        studentRout.js  
+            const studentRouter = exprees.Router();
+                - studentRouter.get("/student",controller); // all student
+                - studentRouter.get("/student/:id",controller); // by id
+                - studentRouter.post("/student",controller); // new student
+                - studentRouter.delete("/student/:id",controller); // delete by id
+                - studentRouter.put("/student/:id",controller); // update by id
+            
+            
+            export var x; // cant export give error
+            export x = 10; // also give error as we can export from declaration part
+
+            if only single property has to be exported from a js file that is too after its declaration and initialization, so in this case we use "export default" 
+
+            demo.js
+            export default x; //right syntax
+
+            sample.js
+            import x from 'demo.js' // x can be anything 
+
+            export default studentRouter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
