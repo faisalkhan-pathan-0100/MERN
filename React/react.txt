@@ -1,0 +1,652 @@
+- react js is library not a language.
+- use to develope frontend.
+- HTML css js with this we can create the front end  from the strach.
+- school website
+    - home.HTML
+    - about.html
+    - gellary.html
+    - contact.html
+    - admission.html
+    - feespayment.html
+- (code reusablity not there if we crite the code with html, css,js as in this we have to write nav and footer code in all the pages).
+- every time nav and footer also reload when we navigate through any of the nav link(new page) inspite of both are already on web page this increase the time to render the page.
+- in otherword browser will reload on every page visit.
+- our goal is to load only main content and footer ,  nav will not load as this will be more efficient.
+- that why we use react as it is provide one page application approach.
+
+
+- what is ejs? -> extra
+
+--------single page web application(SPA)------------------
+- display main content (except nav and footer) without the loading of the page.
+- single page application will have only one HTML file.
+- like when we land to new page(visiting any link of new page), home page html will replace with new page html.
+    ex,  home page content(main home content) -> replace with -> aboutUS page html.
+- in SPA we called all page is called as component.
+- instade of creating diff diff html file,
+ in react we create the components.
+- components is one ui element.
+- components may be whole page, button, card or any thing.
+- we just have to say react to display  component on the webpage based on the url and react do all this task autometically.
+-
+
+- for react app:
+    - folder structure and file structure
+    - package.json file
+    - index.js file
+    - install requried dependancy.
+
+- manually we do not have to do all this by own but react will do all this task.
+- for that we have to install CLI tool create-react-app or vite.
+
+step -1  npm create vite@latest
+step -2  project name:
+step -3  packagename:
+step -4  select freamwork;  -> react
+step -5  select variant : -> javaScript
+step -6  run commands
+        6.1 cd projectname
+        6.2 npm install (install all dependancy)
+        6.3 npm run dev 
+
+------------------------------------------------------
+- two type of components
+    1.class based componenet
+        - to represent the component if class has been created(if we used class syntax) it is class based componenet
+        - it is not light weight componenet as we have to write class code -> make methods in it and then creating the object of that class and then call the methods of class with that object to impliment.
+        - rare use now a day.
+
+        step- 1 create MyComponent.jsx file (for every component create jsx file)
+        step -2 import Component from react module
+                ex, import { Component } from "react";
+
+        step -3 create class in MyComponent.jsx and extend it to Component.
+                class MyComponent extends Component{  }
+        step -4 override the rendor() function and return our UI component
+                render(){
+                    return (
+                        <div>
+                            <h1>Welcome to my component</h1>
+                        </div>
+                    )
+                }
+        step -5 componenet name will be tag name.
+            ex, <MyComponent> </MyComponent> and export it 
+
+        step -6 import in the main file (App.jsx) or wherever we want to display
+           ex, import { MyComponent } from "./MyComponent"
+
+
+
+    2.function based componenet
+        - to represent the component if we are creating  a fucntion.
+        - it is light weight componenet as we have to write less code and easy to impliment
+
+        export function MyComponent(){
+            return(
+                <div> </div>
+            )
+        }
+
+
+------------------------------------------jsx----------------------------------------------
+- jsx => javaScript and xml(in xml only customon tag only, no predefine tag unlike HTML)
+- we can write the HTML code in javaScript file due to this jsx file.
+- jsx extention enabling a devloper write js code along with html code.
+---------------------virtual DOM---------------------------------------
+
+- react provide virtual DOM.
+- virtual DOM is copy of the original DOM.
+- virtual DOM is more faster than actual DOM, how?
+
+- vertual DOM converted to actual DOM
+- vertual DOM looks for the differenece between two consequent renders and only update the section on the web which is updated
+
+----------------------props-------------------------------------------
+- every react components has one feature(property) is props:
+- href is property of the anchor tag and src is property of the img tag in that same way react componenet has some property(attribute)
+    tag -> attribute
+    componenet -> props
+- we can pass attribute(props) to react componenet,
+- props is optional
+- more then one props can be given to any componenet
+
+
+------------------for fucntion component------------------------------
+app.jsx
+    ex, <MyComponent data="faislkhan pathan" heading="first"> </MyComponent>  //point -2
+
+    -function component receives props as the arguments
+        here data goes to the argument of the MyComponent() function
+    - react js create one json object of the all the props and that json object goes in as argument of fucntion componenet.
+
+            props = {
+                data = "faislkhan pathan",
+                heading="first"
+            }
+
+MyComponent.jsx
+    export function MyComponent(props){  //point -1
+            return(
+                <h1>{poprs.heading}</h1>
+                <p>{props.data}</p>
+            )
+        }
+
+    
+
+-point -1 componenet it self cant define /decide its own props value and cant change the props value
+- point -2 componenet can only receive the props and use its value either on UI or into any business logic.
+
+---------------for class componenet------------------------
+DemoComponent.jsx
+
+    import {Component} from 'react';
+
+    export class DemoComponent extends Component {
+        render(){
+            return (
+                <div>
+                    <h1> {this.props.heading}</h1>
+                    <p> {this.props.text}</p>
+                </div>
+            )
+        }
+    }
+
+    - here all props become the class level instance property in class componenet and we can access it by this keyword
+
+app.jsx
+    <DemoComponent text="dummy componenet" heading="example" dummy content"></DemoComponent>
+        props = {
+            text : "dummy componenet",
+            heading="Welcome"
+        }
+
+------------------------------------------------------------------
+- in routing based on url now we render the componenet or map the componenet on webpage
+- react js not providing the routing mechanism so we used 3rd party module "react-router-dom".
+
+step -1 
+    npm install react-router-dom (install the 3rd party module)
+step -2
+------react-router-dom----------------------------------------------------------
+componenet
+    1. Route
+    2. Routes
+    3. BrowserRouter
+
+
+
+to run the project - npm run dev & this will give the url 
+-----------------------------------------------------------------
+app.jsx
+    app(){
+        return(
+            <BrowserRouter>
+                <div>
+                    <Navbar></Navbar> // common for all the pages that is why outside the <Routes> componenet
+                    <Routes>
+                        -- url based rendering componenet --
+                        <Route path="/" element={ <Home></Home> }> </Route>
+                        <Route path="/about" element={ <AboutUS></AboutUS> }> </Route>
+                        <Route path="/conact" element={ <Contact></Contact> }> </Route>
+                    </Routes>
+                    <footer></footer>
+                </div>
+            </BrowserRouter>
+        
+        )
+    }   
+Note: still page reloding it is due to the anchor tag
+------------------------------------------------------------------
+-> problem of reloading with this
+export fucntion Navbar(){
+    return (
+        <div>
+            <a href = "/">Home</a>
+            <a href = "/about">About</a>
+            <a href = "/contact">Contact</a>
+        </div>
+    )
+}
+
+-------------------solution
+import {Link} from 'react-router-dom'
+export fucntion Navbar(){
+    return (
+        <div>
+         <Link to="/">Home</Link>
+         <Link to="/AboutUs">AboutUs</Link>
+         <Link to="/ContactUs">ContactUs</Link>
+        </div>
+    )
+}
+------------------------
+export fucntion Home(){
+    return (
+        <div>
+           <h1>Welcome to home page</h1>
+           <p>lorem ipsum</p>
+        </div>
+    )
+}
+
+---------------------------------
+export fucntion AboutUS(){
+    return (
+        <div>
+            <h1>know about us</h1>
+            <h1>our vision</h1>
+            <p>this is our vision</p>
+        </div>
+    )
+}
+
+
+
+-------------------state(06-05-2025)-----------------------------------------------
+- state is one kind of property of the componenet which value is decide and chnage by the componenet based on requirement and can initialized its value. 
+- state is the native feature of class componenet.
+- With hooks, we can use features that were previously only available in class components (like state and lifecycle methods) inside function components.
+- if we want to use the any feature of class components into a function componenet then hooks are used.
+
+
+---------------------event handaling in react---------------------------------------
+- react js says that developer should go into declarative way
+- <button onClick={reference of function}>+</button>
+    ex,
+    <button onClick={getData}>+</button>
+
+
+
+src>componenet>scoreboeard.jsx
+    import {Component}  from "react";
+
+    export class ScoreBoard extends Component{    
+        constructor(){    // 1
+            super();
+            //state property
+            this.state = {   //2
+                score : 0
+            }
+            this.increaseScore = this.increaseScore.bind(); // now this keyword point to same class object
+            this.increaseScore = this.increaseScore.bind(); // now this keyword point to same class object
+
+        }
+
+        increaseScore(){   // class only have this kind of fucntion   //*6
+            // this.state.score += 1; not work
+            this.setState({ score : this.state.score + 1});  // passing new state of object so it will rerender on webpage
+        }
+
+        decreaseScore(){   //*6
+            this.setState({ score : this.state.score - 1});
+        }
+        render(){   // 3 and *7(whene state update)
+            return(
+                <div>
+                    <h1>{this.state.score}</h1>  // 4
+                    <button onClick={this.increaseScore}>+</button>  //*5
+                    <button onClick={this.decreaseScore}>-</button> //*5
+                </div>
+            )
+        }
+    }
+
+----------------event handling with function componenet--------------------------------------
+- state in function componenet impliment by hooks
+- hooks is one kind of function.
+- naming convention while calling hook function with prefix word use.
+    ex, use.anything();
+- useState() -> predefine hook in react using which we can create the state in our function componenet
+- what we pass in this function?
+    useState(initial-value); 
+    - this will give two things in return
+        1. state property
+        2. function to update the state property
+
+    - how to impliments?
+        const [state-name, function-name] = useState(initial-value);
+        ex,
+            const [score, setScore] = useState(0);   // we dont have to write the setScore function
+            const [venue, setVenue] = useState("xyz stadium");
+            const [player, setPlayer] = useState("ABD");
+
+src>componenet>ScoreCard.jsx
+    import {useState} from 'react'
+    export function ScoreCard(){
+
+        const[score,setScore] = useState(0);
+
+        const increaseScore = () =>{
+            setScore(score+2);
+        } 
+        const decreaseScore = () =>{
+            setScore(score-2);
+        } 
+        return(
+                <div>
+                    <h1>{score}</h1>  // 4
+                    <button onClick ={increaseScore}>+</button>  //*5
+                    <button onClick ={decreaseScore}>-</button> //*5
+                </div>
+            )
+    }
+
+------------------lifecycle of react componenet-------------------------
+- mounting - start rendering  componenet  on webpage
+- demounting/unmount -   componenet getting remove
+
+- lifecycle funciton in a class componenet
+    1. constructor  (api call not suggested in this )
+    2. render
+    3. componenetDidMount - only and only after initial render
+        - api call is suggested in this function 
+    4. componenetDidUpdate - run only when componenet state update (statechnage event);
+    5. shouldComponentUpdate - return true or false
+        - true -> render() call
+        - false -> render() not call
+        - true and false based on previous state value and current state value
+
+    6. componenetWillUnmount ->  call just before the component  is getting unmount
+    7. componenetDidCatch -> called when there is error
+
+--------------------------------------------------------------
+UserData.jsx
+import {COmponent} from 'react';
+export class UserData extends Component{
+    constructor(){
+        super();
+        this.state = {   //state object
+            users : []  // api response data holding variable or array
+        }
+    }
+    rander(){
+         return()
+         <div>
+            <h1>User Data List</h1>
+         </div>
+    }
+    aysnc componenetDidMount(){
+        try{
+           const response =  await fetch("url");
+           const data = await response.json();
+           this.setState({users : data});
+        }catch(error){
+            console.log(error);
+        }
+    }
+}
+
+-----------------evening------------------------------
+==========================================================================
+---------------complex way to call api------------------------------------------
+fetch(url, {
+method: 'POST',
+body:data,
+headers: {'Authorization': 'Bearer eyjgdfg'}
+});
+---------------------------solution(axios module)-------------------
+- axios module 
+    step -1 npm install axios;
+    step -2 import axiios from axios;
+    step -3 enjoy it (we can say that ajax wrapper function mention below)
+        axios.get("url") - for get
+        axios.post("url",data) - for post here data is request body
+        axios.put("url",data) - for put(update)
+        axios.delete("url") - for delete
+
+==========================================================================
+// with class component
+import {COmponent} from 'react';
+import 
+export class UserData extends Component{
+    constructor(){
+        super();
+        this.state = {   //state object
+            users : []  // api response data holding variable or array
+        }
+    }
+
+
+    /*   complex method incase of put and post so we use axios module
+
+    aysnc componenetDidMount(){ // call after just first render
+        const response = await fetch("url");    // for get request
+        const data = await response.json();
+    }
+
+    */
+    async componenetDidMount(){
+        try{
+            const response = wait axios.get("url");
+            console.log(response)
+            //const data = await response.json();
+            console.log(response.data);
+            this.setState({users:response.data});
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    rander(){
+        return(
+            <div>
+                <h1>User Data List</h1>
+                <table border ={1} cellPadding={10} cellSpacing={0}>
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>name</td>
+                            <td>Email</td>
+                            <td>Username</td>
+                            <td>Phone</td>
+                        </tr>
+                    </thead>
+                    /*
+                    in react component, if we have an array of data and we want to render the list of its items on UI, react will ask for the array of html ui elements
+                    */
+                    <tbody>
+                        {
+                            this.state.users.map((user)=>{
+                                return(
+                                    <tr>
+                                        <td>{user.id}</td>
+                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.phone}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+        )
+         
+    }   
+}
+
+app.jsx
+    function app(){
+        return(
+            <div>
+                <UserData></UserData>
+            </div>
+        )
+        
+    }
+
+
+----------------------useEffect----------------------
+useEffect(effect-callBack,dependacy-array) this hook is use to impliment the lifecycle feture of the class componenet into the function componenet
+useEffect(()=>{
+
+},[]);
+
+- componentDidMount: when first time componenet render after that
+useEffect(()=>{
+
+}, []);
+
+- componentDidUpdate: if any change in componenet
+useEffect(()=>{
+
+}, [variable x]);  // wherever value of variable x chnage this will call
+
+- componenetWillUnmount:just befor the component remove
+useEffect(()=>{
+
+    return() =>{
+        //clean up task
+    }
+}, []);
+
+// for every change in the app
+useEffect(() => {
+  console.log('Effect ran');
+});
+----------------------------use context hook-----------------------------
+- useContext hook is used to manage the globle data into react application
+    globalstate,services, theams, user setting
+
+- 3 steps of useContext 
+    1. creating the useContext
+        1.1 import {createContext} from 'react'
+            const logincontext = createContext();
+    2. providing the useContext
+        2.1 
+    3. consuming the useContext
+---------------------------
+export funciton UserRecord(){
+    const [users,setUsers] = useState([]);
+        const getUserData = async()=>{
+            try{
+                const response = await axios.get("url");
+                console.log(response);
+                setUsers(response.data);
+            }catch(error){
+                console.log(error);
+            }
+        }
+    useEffect( ()=>{  // componenetWillUnmount-> only return call callBackfunction
+        getUserData();
+            
+    },[])
+    return(
+        <div> 
+            <h1> List of the users</h1>
+            <table border ={1} cellPadding={10} cellSpacing={0}>
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>name</td>
+                            <td>Email</td>
+                            <td>Username</td>
+                            <td>Phone</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            users.map( (user) => {
+                                   return(
+                                        <tr key={u.id}> //uique key for each row
+                                            <td>{user.id}</td>
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.username}</td>
+                                            <td>{user.phone}</td>
+                                        </tr>
+                                   ) 
+                            });
+                        }
+                    </tbody>
+                </table>
+        </div>
+    )
+}
+-----------
+
+
+
+-------------------------------------------------
+form data handling in react (from frontend)
+step -1 create a state to contain the from data 
+        - this data conatin all the data from form input feild.
+
+        const[formData,setFormData] = useState({id:'',name:'',phone:'',marks:''}) // initial value as object
+
+step -2 read the input value at a time when user start typing into the input feild and store data value into state(onkeyup/onChange event)
+/*
+    const handleIdChange = ()=>{
+        var value;
+        setFormData({id:value});
+    }
+
+    const handleNameChange = ()=>{
+        var value;
+        setFormData({id:value});
+    }
+*/
+/* solution -1
+    const handleIdChange = ()=>{
+        var value;
+        setFormData({...fromData,id:value});
+    }
+
+    const handleNameChange = ()=>{
+        var value;
+        setFormData({...fromData,id:value});
+    }
+*/
+step -3 at the time of the submit we get the data from the state and send it to api in the form of the request body
+
+CORS cross origin Resourse Sharing
+//06-05-2025 evening imp
+
+note - remaining
+
+-------------------------day-14(07-05-2025 morning)--------------------------
+- bootstarp integration with core html
+    - external css of bootstarp link
+    - external js of bootstarp script 
+
+- bootstarp integration with react
+    bootstarp + react(componenet) -> react-bootstrap library
+    installation -> npm install react-bootstrap 
+                    npm install bootstrap
+    - add bootstarp css in either main.jsx or app.jsx
+
+        - it will give components like 
+            <Container>
+                <Row>
+                    <Col>
+                            <Alert>
+                            <Card>
+                            <Button></Button>
+                    </Col>
+                </Row>
+            </Container>
+
+        - closing componenet,
+            - <MyComponent></MyComponent>
+            - <MyComponent/>
+
+- npm install react-router-bootstarp;
+- <LinkContainer></LinkContainer> - from 'react-router-bootstarp'
+
+
+-------------conditional rendering
+
+-- react-toastify 3rd party module
+
+
+---------evening (07-05-2025)-----------------
+
+---------morning (08-05-2025)-----------------
+-----localStorage(browser memory)
+- one of predefine js object is localStorage to store the local data.
+- localStorage.setItem(key,value);
+    ex, localStorage.setItem("tokan",response.data.token);
