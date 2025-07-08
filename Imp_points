@@ -1,0 +1,20 @@
+# what is pure component class?
+  A PureComponent class in React is a special type of class component that automatically implements a shallow comparison of props and state to optimize rendering.
+
+#comments in recat { /* */ }
+
+#Babel
+  - Babel is a tool that transforms modern JavaScript code into backward-compatible versions for older browsers.
+  - It compiles newer syntax/features into older JavaScript
+  - Since it transforms JavaScript to JavaScript (different versions), it is also called a transpiler (source-to-source compiler).
+  - So, Babel is both a compiler and a transpiler.
+
+Quick definitions:
+  Compiler: Translates code from one language to another (e.g., Java to bytecode).
+  Transpiler: Translates code from one version of a language to another version of the same language.
+
+# A valid React component can return only one element(<h1>one element</h1>), which can be a single HTML element, a
+React fragment(<>  </> ), or a component containing multiple elements
+
+
+  
