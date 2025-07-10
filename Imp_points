@@ -16,7 +16,42 @@ Quick definitions:
 # A valid React component can return only one element(<h1>one element</h1>), which can be a single HTML element, a
 React fragment(<>  </> ), or a component containing multiple elements
 
-#
+#StrictMode
+- StrictMode is a tool in React that helps highlight potential issues in an application.
+- It activates additional checks and warnings for deprecated APIs, unsafe lifecycles, unexpected side effects, and other problems.
+- It does not render any UI and only runs in development mode.
+
+- ex,
+    ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+    );
+
+#shape validation
+In React, to validate an object prop with specific properties, you use PropTypes.shape().
+
+Example:
+ 
+import PropTypes from 'prop-types';
+
+MyComponent.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number,
+  }).isRequired,
+};
+
+#Reconciliation
+  - Reconciliation is the process of comparing and updating the virtual DOM
+  - Reconciliation occurs when a component's state or props change, or when a component mounts or
+unmounts.
+- ReactJS uses a depth-first search algorithm for reconciliation
+
+#What is a Higher-Order Component?
+A Higher-Order Component (HOC) is a function that takes a React component as an argument and returns a new enhanced component.
+
 
 
   
