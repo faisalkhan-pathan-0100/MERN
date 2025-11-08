@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { counterActions, hideActions } from "../store";
+import { counterActions } from "../store/counter";
+import { hideActions } from "../store/hide";
 
 const Controls = () => {
   const incdec = useRef();
